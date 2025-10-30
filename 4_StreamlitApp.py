@@ -1,4 +1,4 @@
-from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 # from langchain.agents import create_agent
 
@@ -19,7 +19,7 @@ st.title("Educosys Chatbot App")
 if "messages" not in st.session_state:
     st.session_state.messages = []  
 
-checkpointer = InMemorySaver()
+checkpointer = MemorySaver()
 
 agent = create_react_agent(
     model="openai:gpt-4o-mini",
