@@ -1,11 +1,19 @@
-from dotenv import load_dotenv
-load_dotenv()
-
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.prebuilt import create_react_agent
 # from langchain.agents import create_agent
 
 import streamlit as st
+
+# Load environment variables
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except:
+    pass
+
+# Access secrets (works both locally and on Streamlit Cloud)
+if "OPENAI_API_KEY" in st.secrets:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 st.title("Educosys Chatbot App")
 
