@@ -12,7 +12,7 @@ except:
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 
-st.title("Educosys Chatbot App")
+st.title("Gen AI First Chatbot App")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []  
