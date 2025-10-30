@@ -1,7 +1,3 @@
-from langgraph.checkpoint.memory import MemorySaver
-from langgraph.prebuilt import create_react_agent
-# from langchain.agents import create_agent
-
 import os
 import streamlit as st
 
@@ -13,6 +9,8 @@ except:
     if "OPENAI_API_KEY" in st.secrets:
         os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.prebuilt import create_react_agent
 
 st.title("Educosys Chatbot App")
 
