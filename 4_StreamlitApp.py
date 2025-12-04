@@ -19,7 +19,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []  
 
 # Create agent + memory only once
-@st.singleton
+@st.cache_resource
 def get_agent():
     checkpointer = InMemorySaver()
 
