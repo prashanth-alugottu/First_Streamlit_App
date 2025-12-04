@@ -9,22 +9,25 @@ except:
     if "OPENAI_API_KEY" in st.secrets:
         os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
-from langgraph.checkpoint.memory import MemorySaver
-from langgraph.prebuilt import create_react_agent
+from langgraph.checkpoint.memory import InMemorySaver
+from langchain.agents import create_agent
 
 st.title("Gen AI First Chatbot App")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []  
 
-checkpointer = MemorySaver()
+checkpointer = InMemorySaver()
+model = ChatOpenAI(model="gpt-4o-mini",
+                   temperature=0.2,
+                   max_tokens=100,
+                   timeout=30)
 
-agent = create_react_agent(
-    model="openai:gpt-4o-mini",
-    tools=[],  # Add your tools here
-    checkpointer=checkpointer,
-    prompt="you are a helpful assistant"
-)
+agent = create_agent(
+        model=model, 
+        tools=[], 
+        checkpointer=checkpointer,
+        system_prompt="You are a helpful assistant with memory")
 
 def stream_graph_updates(user_input : str) :
     assistant_response = ""
