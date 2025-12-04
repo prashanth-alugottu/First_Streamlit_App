@@ -45,7 +45,11 @@ def stream_graph_updates(user_input : str) :
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         
-        events = get_agent()
+        agent = get_agent()
+        events = agent.invoke(
+    {"messages":
+        [{"role":"user","content":"Who is PM for India"}]},
+                      {"configurable": {"thread_id": "1"}})
         
         for event in events:
             for value in event.values():
