@@ -18,17 +18,29 @@ st.title("Gen AI First Chatbot App")
 if "messages" not in st.session_state:
     st.session_state.messages = []  
 
-checkpointer = InMemorySaver()
-model = ChatOpenAI(model="gpt-4o-mini",
-                   temperature=0.2,
-                   max_tokens=100,
-                   timeout=30)
+# Create agent + memory only once
+@st.singleton
+def get_agent():
+    checkpointer = InMemorySaver()
 
-agent = create_agent(
-        model=model, 
-        tools=[], 
+    model = ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0.2,
+        max_tokens=100,
+        timeout=30
+    )
+
+    agent = create_agent(
+        model=model,
+        tools=[],
         checkpointer=checkpointer,
-        system_prompt="You are a helpful assistant with memory")
+        system_prompt="You are a helpful assistant with memory"
+    )
+    return agent
+
+
+agent = get_agent()  # now persists across reruns!
+
 
 def stream_graph_updates(user_input : str) :
     assistant_response = ""
@@ -36,10 +48,7 @@ def stream_graph_updates(user_input : str) :
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         
-        events = agent.stream({"messages":
-        [{"role":"user","content":user_input}]},
-                      {"configurable": {"thread_id": "1"}})
-        
+        events = get_agent()
         
         for event in events:
             for value in event.values():
