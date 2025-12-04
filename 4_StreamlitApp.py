@@ -46,7 +46,7 @@ def stream_graph_updates(user_input : str) :
         message_placeholder = st.empty()
         
         agent = get_agent()
-        events = agent.invoke(
+        events = agent.stream(
     {"messages":
         [{"role":"user","content":"Who is PM for India"}]},
                       {"configurable": {"thread_id": "1"}})
