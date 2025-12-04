@@ -35,9 +35,12 @@ def stream_graph_updates(user_input : str) :
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        events = agent.stream({"messages":[("user", user_input)]},
-                              {"configurable":{"thread_id":"def"}}
-                              )
+        
+        event = agent.stream({"messages":
+        [{"role":"user","content":user_input}]},
+                      {"configurable": {"thread_id": "1"}})
+        
+        
         for event in events:
             for value in event.values():
                 new_text = value["messages"][-1].content
