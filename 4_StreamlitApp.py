@@ -39,9 +39,6 @@ def get_agent():
     return agent
 
 
-agent = get_agent()  # now persists across reruns!
-
-
 def stream_graph_updates(user_input : str) :
     assistant_response = ""
 
