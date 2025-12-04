@@ -48,7 +48,7 @@ def stream_graph_updates(user_input : str) :
         agent = get_agent()
         events = agent.stream(
     {"messages":
-        [{"role":"user","content":"Who is PM for India"}]},
+        [{"role":"user","content":user_input}]},
                       {"configurable": {"thread_id": "1"}})
         
         for event in events:
